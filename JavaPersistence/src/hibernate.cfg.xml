@@ -21,9 +21,10 @@
         <property name="show_sql">true</property>
          
         <!-- Use mapping basado en XML-->
-        <mapping resource="com/bitcero/domain/Transaction.hbm.xml" />	
+		<!-- <mapping resource="com/bitcero/domain/Transaction.hbm.xml" /> -->
 
         <!-- Usar mapping en base a anotaciones-->
+        <mapping class="com.bitcero.domain.Transaction" />
         
     </session-factory>
 </hibernate-configuration> 

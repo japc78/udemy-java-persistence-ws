@@ -21,8 +21,10 @@ public class Test {
 		Date date = new Date();
 
 		// Crea una instancia de la transaccion
-		Transaction transaction = new Transaction("Credit", new Timestamp(date.getTime()));
+		// Transaction transaction = new Transaction("Credit", new Timestamp(date.getTime()));
+		 Transaction transaction = new Transaction("Inversion", new Timestamp(date.getTime()));
 
+		
 		// Salvar la transaccion
 		session.save(transaction);
 
