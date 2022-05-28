@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC 
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN" 
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"> 
+        
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database connection settings -->
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <!-- Ubicación de la B.D. -->
+        <property name="connection.url">jdbc:mysql://localhost:3306/udemy_java_persistence_test1?useSSL=false</property>
+        <!-- Usuario de la B.D. -->
+        <property name="connection.username">udemy</property>
+        <!-- Contraseña de la B.D. -->
+        <property name="connection.password">1234</property>
+
+        <!-- Dialecto SQL -->
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- Mostrar en consola operaciones SQL -->
+        <property name="show_sql">true</property>
+         
+        <!-- Use mapping basado en XML-->
+        <mapping resource="com/bitcero/domain/Transaction.hbm.xml" />	
+
+        <!-- Usar mapping en base a anotaciones-->
+        
+    </session-factory>
+</hibernate-configuration> 
