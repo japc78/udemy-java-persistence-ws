@@ -54,4 +54,9 @@ public class Transaction implements Serializable {
 		this.date = date;
 	}
 
+	@Override
+	public String toString() {
+		return "Transaction [id=" + id + ", type=" + type + ", date=" + date + "]";
+	}
+
 }
