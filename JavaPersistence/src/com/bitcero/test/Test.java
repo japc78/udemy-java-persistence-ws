@@ -2,8 +2,11 @@ package com.bitcero.test;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 import com.bitcero.domain.Transaction;
 import com.bitcero.utils.HibernateUtil;
@@ -16,23 +19,17 @@ public class Test {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 
-		// SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		// Date date = new Date();
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<Transaction> criteria = builder.createQuery(Transaction.class);
 
-		// Crea una instancia de la transaccion
-		// Transaction transaction = new Transaction("Credit", new
-		// Timestamp(date.getTime()));
-		// Transaction transaction = new Transaction("Inversion", new
-		// Timestamp(date.getTime()));
+		// Se definde el tipo de entidad que retorna la consulta
+		Root<Transaction> root = criteria.from(Transaction.class);
 
-		@SuppressWarnings("unchecked")
-		Query<Transaction> query = session.createQuery("from Transaction");
-		List<Transaction> transactions = query.getResultList();
+		// Construyendo la consulta
+		criteria.select(root);
+		List<Transaction> transactions = session.createQuery(criteria).getResultList();
 
-		System.out.println(transactions.toString());
-
-		// Salvar la transaccion
-		// session.save(transaction);
+		System.out.println(transactions);
 
 		session.getTransaction().commit();
 		session.close();
