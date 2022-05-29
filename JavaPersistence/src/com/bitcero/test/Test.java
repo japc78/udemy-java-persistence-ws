@@ -9,6 +9,7 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 
 import com.bitcero.domain.Transaction;
+import com.bitcero.domain.Transaction_;
 import com.bitcero.utils.HibernateUtil;
 
 public class Test {
@@ -26,7 +27,8 @@ public class Test {
 		Root<Transaction> root = criteria.from(Transaction.class);
 
 		// Construyendo la consulta
-		criteria.select(root);
+		criteria.select(root).where(builder.equal(root.get(Transaction_.type), "Credit"));
+
 		List<Transaction> transactions = session.createQuery(criteria).getResultList();
 
 		System.out.println(transactions);
