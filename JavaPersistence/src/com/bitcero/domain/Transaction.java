@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,6 +20,9 @@ public class Transaction implements Serializable {
 	private int id;
 	private String type;
 	private Timestamp date;
+	
+	@OneToOne(mappedBy = "transaction")
+	private Report report;
 
 	public Transaction() {
 

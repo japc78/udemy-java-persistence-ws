@@ -25,6 +25,7 @@
 
         <!-- Usar mapping en base a anotaciones-->
         <mapping class="com.bitcero.domain.Transaction" />
+        <mapping class="com.bitcero.domain.Report" />
         
     </session-factory>
 </hibernate-configuration> 
