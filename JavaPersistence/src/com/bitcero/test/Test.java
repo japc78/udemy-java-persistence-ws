@@ -1,5 +1,8 @@
 package com.bitcero.test;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -18,22 +21,40 @@ public class Test {
 		// TODO Auto-generated method stub
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
+		org.hibernate.Transaction tx = null;
 
-		CriteriaBuilder builder = session.getCriteriaBuilder();
-		CriteriaQuery<Transaction> criteria = builder.createQuery(Transaction.class);
+		try {
+			tx = session.beginTransaction();
 
-		// Se definde el tipo de entidad que retorna la consulta
-		Root<Transaction> root = criteria.from(Transaction.class);
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<Transaction> criteria = builder.createQuery(Transaction.class);
 
-		// Construyendo la consulta
-		criteria.select(root).where(builder.equal(root.get(Transaction_.type), "Credit"));
+			// Se definde el tipo de entidad que retorna la consulta
+			Root<Transaction> root = criteria.from(Transaction.class);
 
-		List<Transaction> transactions = session.createQuery(criteria).getResultList();
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date parseDate = dateFormat.parse("2022-05-30 17:24:11");
 
-		System.out.println(transactions);
+			// Construyendo la consulta
+			criteria.select(root).where(builder.and(
+					builder.like(root.get(Transaction_.type), "%Inversion%"),
+					builder.lessThan(root.get(Transaction_.date), new Timestamp(parseDate.getTime()))
+					));
 
-		session.getTransaction().commit();
-		session.close();
+			List<Transaction> transactions = session.createQuery(criteria).getResultList();
+
+			System.out.println(transactions);
+
+			tx.commit();
+
+		} catch (Exception e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
 	}
 }
